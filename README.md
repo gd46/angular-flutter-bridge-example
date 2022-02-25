@@ -1,5 +1,8 @@
 # AngularFlutterBridgeExample
 
+This project is a demo project meant to work with the [Flutter examples repo](https://github.com/gd46/flutter-examples) in our to demo communication between Flutter and a Webview.
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.5.
 
 ## Development server

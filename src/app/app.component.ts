@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NativeBridgeService } from 'src/services/native-bridge.service';
+
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-flutter-bridge-example';
+
+  constructor(private nativeBridgeService: NativeBridgeService) { }
+
+
+  closeWebView() {
+    this.nativeBridgeService.closeWebView();
+  }
 }
