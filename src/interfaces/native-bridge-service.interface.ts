@@ -1,5 +1,6 @@
+import { IDialogConfig } from "./dialog-config.interface";
+
 export interface INativeBridgeService {
-    openWebView(): void;
-    closeWebView(): void;
     showSnackbar(message: string): void;
+    openDialog(dialogConfig: IDialogConfig): void;
 }

@@ -1,5 +1,6 @@
 import { DOCUMENT } from "@angular/common";
 import { Inject, Injectable } from "@angular/core";
+import { IDialogConfig } from "src/interfaces/dialog-config.interface";
 import { INativeBridgeService } from "src/interfaces/native-bridge-service.interface";
 import { WindowService } from "./window.service";
 
@@ -11,17 +12,17 @@ export class NativeBridgeService implements INativeBridgeService {
             this.document.getElementById("title")!.innerHTML = title;
             this.showSnackbar('Set title from flutter!!!');
         }
-    }
-
-    openWebView() {
-        this.windowService.getWindow().navigationHandler.postMessage('open');
-    }
-
-    closeWebView() {
-        this.windowService.getWindow().navigationHandler.postMessage('close');
+        this.windowService.getContainer().sendJson = (json: any) => {
+            this.document.getElementById("json")!.innerHTML = json['title'];
+            this.showSnackbar(json);
+        }
     }
 
     showSnackbar(message: string) {
         this.windowService.getWindow().snackBarHandler.postMessage(message);
+    }
+
+    openDialog(dialogConfig: IDialogConfig) {
+        this.windowService.getWindow().dialogHandler.postMessage(JSON.stringify(dialogConfig));
     }
 }
