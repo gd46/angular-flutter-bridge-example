@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from 'src/components/dialog/dialog.component';
 import { NativeBridgeService } from 'src/services/native-bridge.service';
 import { WindowService } from 'src/services/window.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { DialogComponent } from 'src/components/dialog/dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -14,11 +14,14 @@ export class AppComponent {
 
   constructor(private nativeBridgeService: NativeBridgeService,
     private windowService: WindowService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private ngZone: NgZone) { }
 
   ngOnInit() {
     this.windowService.getContainer().openDialog = () => {
-      this.openDialog();
+      this.ngZone.run(() => {
+        this.openDialog();
+      });
     }
   }
 
