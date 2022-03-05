@@ -14,15 +14,12 @@ export class AppComponent {
 
   constructor(private nativeBridgeService: NativeBridgeService,
     private windowService: WindowService,
-    private dialog: MatDialog,
-    private ngZone: NgZone) { }
+    private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.windowService.getContainer().openDialog = () => {
-      this.ngZone.run(() => {
-        this.openDialog();
-      });
-    }
+    this.windowService.getWindow().addEventListener('onOpenModel', (event: any) => {
+      this.openDialog();
+    });
   }
 
   openDialog() {

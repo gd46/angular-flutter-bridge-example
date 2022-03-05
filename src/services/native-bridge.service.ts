@@ -9,19 +9,11 @@ import { WindowService } from "./window.service";
 @Injectable({ providedIn: 'root' })
 export class NativeBridgeService implements INativeBridgeService {
     constructor(private windowService: WindowService,
-        @Inject(DOCUMENT) private document: Document,
         private router: Router) {
-        this.windowService.getContainer().setTitle = (title: string) => {
-            this.document.getElementById("title")!.innerHTML = title;
-            this.showSnackbar('Set title from flutter!!!');
-        }
-        this.windowService.getContainer().sendJson = (json: any) => {
-            this.document.getElementById("json")!.innerHTML = json['title'];
-            this.showSnackbar(json);
-        }
-        this.windowService.getContainer().routeToFeature = (routeConfig: IRouteConfig) => {
-            this.router.navigateByUrl(routeConfig.uri);
-        }
+        this.windowService.getWindow().addEventListener('onRouteToFeature', (event: any) => {
+            this.showSnackbar(JSON.stringify(event));
+            this.router.navigateByUrl(event.routeConfig.uri)
+        })
     }
 
     showSnackbar(message: string) {
