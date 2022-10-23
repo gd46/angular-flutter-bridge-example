@@ -10,17 +10,20 @@ import { WindowService } from "./window.service";
 export class NativeBridgeService implements INativeBridgeService {
     constructor(private windowService: WindowService,
         private router: Router) {
-        this.windowService.getWindow().addEventListener('onRouteToFeature', (event: any) => {
-            this.showSnackbar(JSON.stringify(event));
-            this.router.navigateByUrl(event.routeConfig.uri)
-        })
+        // this.windowService.getWindow().addEventListener('onRouteToFeature', (event: any) => {
+        //     this.showSnackbar(JSON.stringify(event));
+        //     this.router.navigateByUrl(event.routeConfig.uri)
+        // })
     }
 
     showSnackbar(message: string) {
-        this.windowService.getWindow().snackBarHandler.postMessage(message);
+        this.windowService.getContainer().showSnackbar(message)
+            .then((response: any) => {
+                console.log(response);
+            })
     }
 
     openDialog(dialogConfig: IDialogConfig) {
-        this.windowService.getWindow().dialogHandler.postMessage(JSON.stringify(dialogConfig));
+        this.windowService.getContainer().openDialog(JSON.stringify(dialogConfig));
     }
 }

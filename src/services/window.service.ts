@@ -4,7 +4,6 @@ import { IContainer } from "src/interfaces/container.interface";
 @Injectable({ providedIn: 'root' })
 export class WindowService {
     constructor() {
-        this.getWindow().Container = {};
     }
 
     getWindow(): any {
